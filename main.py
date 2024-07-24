@@ -1,16 +1,14 @@
 import time
+from argparse import ArgumentParser, Namespace
 
 from rich.live import Live
 from rich.table import Table
 
+import config
 from data import Product
 
 
-URLS = [
-    "https://www.amazon.com/dp/0544445783",
-    "https://www.amazon.com/dp/0593499581",
-]
-
+AMAZON_PRODUCT_LINK = "https://www.amazon.com/dp"
 products: list[Product] = []
 
 
@@ -39,8 +37,10 @@ def create_product_table() -> Table:
 
 if __name__ == "__main__":
 
-    for url in URLS:
-        products.append(Product(url, 1.00))
+    for [product_id, dream_price] in config.args.item:
+        products.append(
+            Product(f"{AMAZON_PRODUCT_LINK}/{product_id}", float(dream_price))
+        )
 
     with Live(create_product_table(), refresh_per_second=1) as live:
         while True:

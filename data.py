@@ -3,8 +3,9 @@ from dataclasses import dataclass
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-
 from selectolax.parser import HTMLParser, Node
+
+import config
 
 
 options: Options = Options()
@@ -12,7 +13,7 @@ options.add_argument("--headless=new")
 
 driver: Chrome = Chrome(
     options=options,
-    service=Service(executable_path="./chromedriver"),
+    service=Service(executable_path=config.args.driver_location),
 )
 
 
